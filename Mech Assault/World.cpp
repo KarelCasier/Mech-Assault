@@ -84,6 +84,6 @@ void World::buildScene()
 	mPlayerMech->setPosition(mSpawnPosition);
 	mSceneLayers[Main]->attachChild(std::move(Player));
 
-	//mPlayerMech->enableFriction();
+	mPlayerMech->enableFriction();
 	//mPlayerMech->enableGravity();
 }

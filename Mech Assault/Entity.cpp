@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-const double Entity::FRICTION = 0.99;
+const double Entity::FRICTION = 0.9;
 const double Entity::GRAVITY = 200;
 
 //Entity::Entity()
