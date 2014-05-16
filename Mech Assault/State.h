@@ -1,12 +1,34 @@
 #pragma once
 
+#include "StateIdentifiers.hpp"
+#include "ResourceIdentifiers.h"
+
+#include <SFML/System/Time.hpp>
+#include <SFML/Window/Event.hpp>
+
+#include <memory>
+
+namespace sf
+{
+	class RenderWindow;
+}
+
+class StateStack;
+class Player;
+
 class State
 {
 public:
     typedef std::unique_ptr<State> Ptr;
+
     struct Context
     {
-        
+		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player);
+
+		sf::RenderWindow*	window;
+		TextureHolder*		textures;
+		FontHolder*			fonts;
+		Player*				player;
     };
     
 public:
@@ -18,9 +40,9 @@ public:
     virtual bool    handleEvent(const sf::Event& event) = 0;
     
 protected:
-    void            requestStackPush(States::ID stateID);
+    void            requestStackPush(StateID stateID);
     void            requestStackPop();
-    void            requestStackClear();
+	void            requestStateClear();
     
     Context         getContext() const;
     

@@ -7,7 +7,7 @@
 #pragma comment(lib, "gdi32.lib")  
 #endif // SFML_STATIC
 
-#include "Game.h"
+#include "Application.h"
 #include <stdexcept>
 #include <iostream>
 
@@ -15,8 +15,8 @@ int main()
 {
 	try
 	{
-		Game game;
-		game.run();
+		Application application;
+		application.run();
 	}
 	catch (std::exception& e)
 	{

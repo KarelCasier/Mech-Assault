@@ -1,5 +1,7 @@
 #include "StateStack.h"
 
+#include <cassert>
+
 StateStack::StateStack(State::Context context)
 : mStack()
 , mPendingList()
@@ -9,7 +11,7 @@ StateStack::StateStack(State::Context context)
 }
 
 template <typename T>
-void StateStack::registerState(States::ID stateID)
+void StateStack::registerState(StateID stateID)
 {
     mFactories[stateID] = [this] ()
     {
@@ -17,7 +19,7 @@ void StateStack::registerState(States::ID stateID)
     };
 }
 
-State::Ptr StateStack::createState(States::ID stateID)
+State::Ptr StateStack::createState(StateID stateID)
 {
     auto found = mFactories.find(stateID);
     assert(found != mFactories.end());
@@ -56,7 +58,7 @@ void StateStack::draw()
     }
 }
 
-void StateStack::pushState(States::ID stateID)
+void StateStack::pushState(StateID stateID)
 {
     mPendingList.push_back(PendingChange(Push, stateID));
 }
@@ -66,7 +68,7 @@ void StateStack::popState()
     mPendingList.push_back(PendingChange(Pop));
 }
 
-void StateStack::clearState()
+void StateStack::clearStates()
 {
     mPendingList.push_back(PendingChange(Clear));
 }
@@ -98,7 +100,7 @@ void StateStack::applyPendingChanges()
     mPendingList.clear();
 }
 
-StateStack::PendingChange::PendingChange(Action action, States::ID stateID)
+StateStack::PendingChange::PendingChange(Action action, StateID stateID)
 : action(action)
 , stateID(stateID)
 {

@@ -1,18 +1,20 @@
 #pragma once
 
 #include <SFML/System/Time.hpp>
-#include "World.h"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+
+#include "ResourceHolder.h"
+#include "ResourceIdentifiers.h"
+#include "StateStack.h"
 #include "Player.h"
-#include <vector>
-#include <memory>
-#include <cmath>
-#include <iostream>
+
 #include <sstream>
 
-class Game : private sf::NonCopyable
+class Application
 {
 public:
-							Game();
+							Application();
 	void					run();
 
 private:
@@ -21,16 +23,19 @@ private:
 	void					render();
 
 	void					updateStatistics(sf::Time elapsedTime);
+	void					registerStates();
 
 private:
 	//For FPS calculations and consistent movement
 	static const sf::Time	TimePerFrame;
 
 	sf::RenderWindow		mWindow;
-	World					mWorld;
+	TextureHolder			mTextures;
+	FontHolder				mFonts;
 	Player					mPlayer;
 
-	sf::Font				mFont;
+	StateStack				mStateStack;
+
 	sf::Text				mStatisticsText;
 	sf::Time				mStatisticsUpdateTime;
 	std::size_t				mStatisticsNumFrames;

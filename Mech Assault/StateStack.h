@@ -1,6 +1,22 @@
 #pragma once
 
-#include <SFML/Graphics/NonCopyable.hpp>
+#include "State.h"
+#include "StateIdentifiers.hpp"
+#include "ResourceIdentifiers.h"
+
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/System/Time.hpp>
+
+#include <vector>
+#include <functional>
+#include <map>
+#include <utility>
+
+namespace sf
+{
+	class Event;
+	class RenderWindow;
+}
 
 class StateStack : private sf::NonCopyable
 {
@@ -16,32 +32,35 @@ public:
     explicit            StateStack(State::Context context);
     
     template <typename T>
-    void                registerState(States::ID stateID);
+    void                registerState(StateID stateID);
     
     void                update(sf::Time dt);
     void                draw();
     void                handleEvent(const sf::Event& event);
     
-    void                pushState(States::ID stateID);
+    void                pushState(StateID stateID);
     void                popState();
-    void                clearState();
+    void                clearStates();
     
     bool                isEmpty() const;
     
 private:
-    State::Ptr          createState(States::ID stateID);
+    State::Ptr          createState(StateID stateID);
     void                applyPendingChanges();
     
 private:
     struct PendingChange
     {
+		explicit			PendingChange(Action action, StateID stateID = StateID::None);
+
         Action          action;
-        States::ID      stateID;
+        StateID      stateID;
     };
     
 private:
     std::vector<State::Ptr>                             mStack;
     std::vector<PendingChange>                          mPendingList;
+
     State::Context                                      mContext;
-    std::map<States::ID, std::function<State::Ptr()>>   mFactories;
+    std::map<StateID, std::function<State::Ptr()>>   mFactories;
 };
