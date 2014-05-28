@@ -192,7 +192,7 @@
     <ClInclude Include="SpriteNode.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.hpp" />
-    <ClInclude Include="StateStack.h" />
+    <ClInclude Include="StateStack.hpp" />
     <ClInclude Include="TitleState.h" />
     <ClInclude Include="Utility.hpp" />
     <ClInclude Include="World.h" />

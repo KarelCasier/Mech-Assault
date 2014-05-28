@@ -2,6 +2,8 @@
 #include "Utility.hpp"
 #include "ResourceHolder.h"
 
+#include <iostream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 MenuState::MenuState(StateStack& stack, Context context)
@@ -40,7 +42,7 @@ bool MenuState::update(sf::Time dt)
 
 bool MenuState::handleEvent(const sf::Event& event)
 {
-	if (event.key.code == sf::Keyboard::Up)
+	if (event.key.code == sf::Keyboard::Up && event.type == sf::Event::KeyPressed)
 	{
 		if (mOptionIndex > 0)
 			mOptionIndex--;
@@ -48,8 +50,9 @@ bool MenuState::handleEvent(const sf::Event& event)
 			mOptionIndex = mOptions.size() - 1;
 
 		updateOptionsText();
+		return true;
 	}
-	else if (event.key.code == sf::Keyboard::Down)
+	else if (event.key.code == sf::Keyboard::Down && event.type == sf::Event::KeyPressed)
 	{
 		if (mOptionIndex < mOptions.size() - 1)
 			mOptionIndex++;
@@ -57,6 +60,7 @@ bool MenuState::handleEvent(const sf::Event& event)
 			mOptionIndex = 0;
 
 		updateOptionsText();
+		return true;
 	}
 
 	if (event.key.code == sf::Keyboard::Return)

@@ -1,4 +1,4 @@
-#include "StateStack.h"
+#include "StateStack.hpp"
 
 #include <cassert>
 
@@ -8,15 +8,6 @@ StateStack::StateStack(State::Context context)
 , mContext(context)
 , mFactories()
 {
-}
-
-template <typename T>
-void StateStack::registerState(StateID stateID)
-{
-    mFactories[stateID] = [this] ()
-    {
-        return State::Ptr(new T(*this, mContext));
-    };
 }
 
 State::Ptr StateStack::createState(StateID stateID)

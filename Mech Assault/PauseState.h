@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StateStack.h"
+#include "StateStack.hpp"
 #include "State.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>

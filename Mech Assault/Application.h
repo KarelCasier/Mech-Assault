@@ -6,7 +6,7 @@
 
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
-#include "StateStack.h"
+#include "StateStack.hpp"
 #include "Player.h"
 
 #include <sstream>

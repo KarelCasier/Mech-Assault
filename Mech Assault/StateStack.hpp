@@ -54,7 +54,7 @@ private:
 		explicit			PendingChange(Action action, StateID stateID = StateID::None);
 
         Action          action;
-        StateID      stateID;
+        StateID			stateID;
     };
     
 private:
@@ -64,3 +64,12 @@ private:
     State::Context                                      mContext;
     std::map<StateID, std::function<State::Ptr()>>   mFactories;
 };
+
+template <typename T>
+void StateStack::registerState(StateID stateID)
+{
+	mFactories[stateID] = [this]()
+	{
+		return State::Ptr(new T(*this, mContext));
+	};
+}
